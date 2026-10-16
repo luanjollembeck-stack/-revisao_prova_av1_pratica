@@ -14,3 +14,16 @@ colchaoRouter.get("/", async (_request: Request, response: Response) => {
         })
     }
 })
+
+colchaoRouter.get("/:id", async (_request: Request<{id: string}>, response: Response) => {
+    const { id } = _request.params
+    try {
+        const res = await colchaoService.getById(id)
+        return response.json(res)
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({
+            error: "Erro Interno"
+        })
+    }
+})
